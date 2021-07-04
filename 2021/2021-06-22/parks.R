@@ -24,9 +24,9 @@ ggplot(df_20, aes(y = city, x= spend_per_resident_data, label = text, fill=spend
   geom_density_ridges_gradient(stat="binline", bins=50)+
   scale_fill_material()+
   geom_label_repel(
-    nudge_y = .1) + labs(title="Park spending per resident in USD", subtitle = "TidyTuesday June 22nd 2021 \nPark Access",
+    nudge_y = .1) + labs(title="Park spending per resident in USD - Top 20 in 2020", subtitle = "TidyTuesday June 22nd 2021 \nPark Access",
                          x = "Spending Per Resident", 
                          y = "City",
                          caption = "By https://github.com/jezzaayt",
                          fill = "Spending per resident")
-
+ggsave("parks.jpg")
