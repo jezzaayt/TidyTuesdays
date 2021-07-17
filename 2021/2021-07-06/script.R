@@ -99,6 +99,7 @@ cal
 class(cal$n)
 #cal <- cal  %>% summarise(n =n())
 
+# not the best due to some are overlapping due to like august 10 11 overlap a bit 
 indc <- ggplot(cal, aes(x=weekday, y = day, label = day)) + geom_tile(aes(fill=n), position = position_dodge(width=2, preserve="total"),  height = 2) +scale_fill_viridis(option="C") +
   facet_wrap(~month, ncol=4 ) + scale_y_reverse(breaks = seq(0,31, 5)) + 
   labs(title = "Independence around the world", subtitle = "TidyTuesday: 06/07/2021\nThough as some data it over years some dates were on the same day number but different week day.\nThis has been collasped into unique day number per month. ",
@@ -108,6 +109,8 @@ indc <- ggplot(cal, aes(x=weekday, y = day, label = day)) + geom_tile(aes(fill=n
   guides(color=FALSE, fill = guide_colourbar(barheight = 5, barwidth = 1.5 )) 
 indc
 ggsave("independence_days.png", height = 8, width =10)
+
+
 #cal$date_parsed <- NULL
 #cal$weekday <- NULL
 cal$day
