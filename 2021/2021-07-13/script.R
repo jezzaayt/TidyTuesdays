@@ -17,17 +17,20 @@ df1
 sg <- ggplot(df, aes(x=reorder(motive, n),label= n,  y= n, fill=series_name)) + geom_bar(stat="identity") + coord_flip() +
   geom_text(position=position_stack(0.5), color="white") + theme_fivethirtyeight() + 
   labs(title = "Most Common Scooby-Doo Motives by Series", x=  "Motives", y = "Number of Motives",
-       subtitle = "TidyTuesday July 13th 2021 - Scooby Doo Episodes", caption = "By Jeremy Aytoun \nhttps://github.com/jezzaayt") +
-  guides(fill=guide_legend("Series Name")) + scale_fill_viridis(option="turbo", discrete = TRUE)
+       subtitle = "TidyTuesday July 13th 2021 - Scooby Doo Episodes", caption = "Visualization by Jeremy Aytoun \nhttps://github.com/jezzaayt") +
+  guides(fill=guide_legend("Series Name")) + scale_fill_viridis(option="turbo", discrete = TRUE) + 
+  theme(legend.position = "right",legend.direction = "vertical")
 sg
 
 
 sg2 <- ggplot(df1, aes(x=reorder(motive, n),label= n,  y= n, fill=motive)) + geom_bar(stat="identity") + coord_flip() +
-  geom_text(position=position_stack(0.5), color="white", size = 2.5) + theme_fivethirtyeight() + 
+  geom_text(hjust=0, color="black") + theme_fivethirtyeight() + 
   labs(title = "Most Common Scooby-Doo Motives", x=  "Motives", y = "Number of Motives", 
-       subtitle = "TidyTuesday July 13th 2021 - Scooby Doo Episodes", caption = "By Jeremy Aytoun\nhttps://github.com/jezzaayt") + 
-  guides(fill=guide_legend("Motives"))+ scale_fill_viridis(option="turbo", discrete = TRUE)
+       subtitle = "TidyTuesday July 13th 2021 - Scooby Doo Episodes", caption = "Visualization by Jeremy Aytoun\nhttps://github.com/jezzaayt") + 
+  guides(fill=guide_legend("Motives"))+ scale_fill_viridis(option="turbo", discrete = TRUE) + 
+  theme(legend.position = "right",legend.direction = "vertical")
 sg2
 
-
+ggsave(plot = sg,filename =  "scooby_doo_motives_series.png",scale = 1.75)
+ggsave(plot=sg2, filename="scooby_doo_motives.png", scale=1.5)
 #sg + geom_text(aes(x = reorder(df1$motive, df1$n) , df1$n, y=df1$n))
