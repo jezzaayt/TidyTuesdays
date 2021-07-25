@@ -44,3 +44,4 @@ ggplot(df, aes(x=drought_lvl, y= area_pct, fill=drought_lvl))+ stat_halfeye() +
   annotate("text" , label = "0.00", x = 5, y = -5) +
   annotate("text" , label = "8.22", x = 6, y = -3) 
 
+ggsave("drought_level.png")
