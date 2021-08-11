@@ -59,8 +59,10 @@ ggsave("RSA_medals.png")
 
 gold  + silver + bronze + plot_annotation(title="Medals won per United States, Great Britain, South Africa, Sweden, Germany and Austria",
                                          caption = "Jeremy Aytoun")
-ggsave("medals_slope.png")
+ggsave("medals_slope.png", scale = 2.5)
 
 
 rsa+oscar + plot_annotation(title="Medals won per South Africa x Oscar Pistorius",
                           caption = "TidyTuesday 3rd August 2021 | Jeremy Aytoun")
+
+ggsave("RSA_medals_x_oscar.png", scale=2)
