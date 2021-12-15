@@ -16,3 +16,6 @@ keys
 ggplot(keys, aes(x = key_mode, y = track_name, fill = album_name)) + geom_tile() + urbnthemes::theme_urbn_print() +
   labs(title = "Musical Keys in Spice Girls by Track and Album", subtitle = "TidyTuesday for week of 14th December 2021", 
        x=  "Key", y = "Track Name", caption = "Visualisation by Jeremy A\n https://github.com/jezzaayt")
+
+ggsave(plot = last_plot(),  "spice_girls_keys.png", scale = 4.25)
+
