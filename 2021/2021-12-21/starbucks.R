@@ -80,3 +80,4 @@ starbucks_milk<- annotate_figure(starbucks_milk, top=
                             color = "#00704A")
                 )
 annotate_figure(starbucks_milk, bottom=text_grob("Visualisation by Jeremy A\nTidyTuesday week of 21st December 2021"))
+
