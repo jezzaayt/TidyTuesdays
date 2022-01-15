@@ -33,6 +33,6 @@ ggplot(colony_year)+ geom_bar(stat="identity", aes(x =year, y = year_colony_adde
                                                                                                              breaks=colony_year$year) +
   geom_text(data = colony_year, aes(x = year, y = year_colony_lost, label = year_colony_lost), position = position_stack(vjust=-.5), size = 3)+
   geom_text(data = colony_year, aes(x = year, y = year_colony_added, label = year_colony_added), position = position_stack(vjust=1), size = 3) + 
-  labs(title = "Bees loss and gains in the United States", subtitle = "TidyTuesday 11th January 2022\nFrom USDA", x = "Years", y = "Colony differences", caption  = "Visualsiation by Jeremy Aytoun") + 
+  labs(title = "Bees loss and gains in the United States", subtitle = "TidyTuesday 11th January 2022\nFrom USDA", x = "Years", y = "Colony differences", caption  = "Visualsiation by Jeremy A") + 
   theme_cleveland()
        
