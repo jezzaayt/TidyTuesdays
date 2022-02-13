@@ -58,7 +58,7 @@ customRed = "#F88379"
 unique(df_pivot$Breed)
 table <- df_pivot %>% group_by(Breed) %>% slice(1) %>% arrange(table, values)
 table
-table <- table[-c(2,3,11:21)]
+table <- table[-c(2,3,12:21)]
 table
 table_complete <- formattable(table, align=c("l", "c", "c", "c", "c", "c", "c", "l"),
             list(`Affectionate With Family` = color_tile(customOne, customTwo),
@@ -78,5 +78,3 @@ webshot(url="dog_breeds.html" , file="table_breeds.png", vheight= 265, zoom = 5)
 table_breeds = png::readPNG("table_breeds.png", native=TRUE, info = TRUE)
 table_breeds                          
 slope + cowplot::draw_image(table_breeds, x = 4, scale = 60, y = 90)
-breeds <- slope + inset_element(table_breeds, left = 0.5, bottom = 0.5, right = 0.5, top = 0.5)
-breeds
