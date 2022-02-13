@@ -36,4 +36,4 @@ ggplot() +
   geom_text(data=centers, aes(x=x, y=y, label=id)) +
   theme_void() +
   coord_map() + labs(title = "Tuskegee Airman", 
-                     subtitle = "Tuskegee Airman Challenge \nTidyTuesday February 8th 2022\nGrey means no person from this state", caption = "Visualisation by Jeremy A") 
+                     subtitle = "Tuskegee Airman Challenge \nTidyTuesday February 8th 2022\nGrey means no person from this state", caption = "Visualisation by @Jezzaayt") 
