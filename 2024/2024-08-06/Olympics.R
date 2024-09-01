@@ -2,7 +2,11 @@ library(tidyverse)
 library(ggtext)
 library(magick)
 library(showtext)
+library(patchwork)
+library(png)
+library(extrafont)
 font_add('fa-brands', 'fonts/Font Awesome 6 Brands-Regular-400.otf')
+
 showtext_auto(enable = TRUE)
 olympics <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-06/olympics.csv") # nolint: line_length_linter.
 olympics
@@ -42,11 +46,11 @@ top_summer <- df_summer %>%
   summarise(total_medals = sum(total_medals)) %>%
   arrange(desc(total_medals)) %>%
   slice(1:9)
-top_summer
+top_summer$year
 
 
 
-theme_set(theme_bw(base_size = 7, base_family = "text"))                
+theme_set(theme_minimal(base_size = 7, base_family = "text"))                
 
 theme_update(
     plot.title.position   = "plot",
@@ -55,9 +59,9 @@ theme_update(
     plot.background       = element_rect(fill = "white", color = "white"),
     panel.background      = element_rect(fill = "white", color = "white"),
     plot.margin           = margin(t = 10, r = 10, b = 10, l = 10),
-    axis.title.x          = element_text(margin = margin(10, 0, 0, 0), size = rel(1.1), color = "black", family = "text", face = "bold", hjust = 0.5),
-    axis.title.y          = element_text(margin = margin(0, 10, 0, 0), size = rel(2), color = "black", family = "text", face = "bold", hjust = 0.5), # nolint
-    axis.text             = element_text(size = rel(0.8), color = "black", family = "text"), # nolint
+    axis.title.x          = element_text(margin = margin(10, 0, 0, 0), size = rel(5), color = "black", family = "text", face = "bold", hjust = 0.5),
+    axis.title.y          = element_text(margin = margin(0, 10, 0, 0), size = rel(5), color = "black", family = "text", face = "bold", hjust = 0.5), # nolint
+    axis.text             = element_text(size = rel(2.5), color = "black", family = "text"), # nolint
     axis.line.x           = element_line(color = "gray40", linewidth = .15),
     panel.grid.minor.y    = element_blank(),
     panel.grid.major.y    = element_line(linetype = "dotted", linewidth = 0.1, color = '#f80000'), # nolint: line_length_linter.
@@ -70,8 +74,8 @@ theme_update(
                                             halign   = 0.5,
                                             r        = unit(5, "pt"),
                                             width    = unit(5.5, "npc"),
-                                            padding  = margin(3, 0, 3, 0),
-                                            margin   = margin(3, 3, 3, 3),
+                                            padding  = margin(3, 0, 0, 0),
+                                            margin   = margin(3, 0, 3, 3),
                                             fill     = "transparent"),
     panel.spacing       = unit(1, 'lines')
 )  
@@ -79,21 +83,35 @@ theme_update(
 
 #create a ggplot with no theme
 # Create a scatter plot for the summer games data frame
+about <- str_glue("Olympics Athletes and Medals — TidyTuesday— 2024-08-06")
 twttr <-  str_glue("<span style='font-family:fa-brands'>&#xf081; </span> ")
 github <- str_glue("<span style='font-family:fa-brands'>&#xf09b; </span> ")
-captiont  <- str_glue("<br>{twttr}    @JezzaAyt 
+captiont  <- str_glue("<br> {about} 
+<br>{twttr}    @JezzaAyt 
 {github}Jezzaayt")
+
+imgpath <- "E:/Coding/tidytuesday/2024/2024-08-06/olympic-logo-png-transparent.png"
+img <- readPNG(imgpath, native = TRUE, info = TRUE) 
+attr(img, "info")
+
 
 # obtained some ideas from other users in TidyTuesday for these 
 
-ggplot(top_summer, aes(x = year, y = total_medals, color = team)) +
+summerplot <- ggplot(top_summer, aes(x = year, y = total_medals, color = team)) +
   geom_point(show.legend = TRUE) +
   geom_line()+
   labs(title = "Total Medals Won by Team for Summer Games (2000-2016)",
-       x = "Year", y = "Total Medals", color = "Team")+
+       x = "Year", y = "Total Medals", color = "Team", caption = captiont)+
        # Add a text label to highlight the top 5 teams
        geom_text(aes(label = total_medals), nudge_y = 2, nudge_x = .5, check_overlap = TRUE) +
-       labs(caption = captiont ) +theme(legend.position = "right", 
+       theme(legend.position = "right",  plot.title = element_text(
+            size = rel(2),
+            family = "title",
+            color = "black",
+            face = "bold",
+            lineheight = 1,
+            margin = margin(t = 5, b = 5)
+        ),
        plot.caption = element_markdown(
          size = rel(2 ),
             color = "#5e5d5d" ,
@@ -101,9 +119,19 @@ ggplot(top_summer, aes(x = year, y = total_medals, color = team)) +
             hjust = 0.1,
             halign = 0,
             margin = margin(t = 10, b = 1)
-       ))
-       
+       )) + 
+        scale_x_continuous(breaks = unique(top_summer$year))
 
 
+summerplot
 
-ggsave("Medals.png")
+plot_logo <-summerplot + 
+inset_element(p = img, 
+                left = 0.7, 
+                bottom = 0.8, 
+                right = 1, 
+                top = 1)
+plot_logo
+
+
+ggsave("Medals.png", last_plot(), dpi = 300, width = 4, height = 7)
