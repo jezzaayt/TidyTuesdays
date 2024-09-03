@@ -12,6 +12,7 @@ library(patchwork)
 library(png)
 library(extrafont)
 library(NLP)
+library(plotly)
 
 font_add('fa-brands', 'fonts/Font Awesome 6 Brands-Regular-400.otf')
 
@@ -174,7 +175,7 @@ caption  <- str_glue("<br> {about}
 
 title <- str_glue("Most amount of Cheese made by animal per region in France") 
 
-ggplot(merge_df) +
+p <- ggplot(merge_df) +
   geom_sf(color = "red", aes(fill =count)) +
   geom_sf_text(aes(label = location), nudge_y = -.2, 
   color ="#ff5a30", size  = 3.7) + 
@@ -200,3 +201,11 @@ filename =current_dir  +"/Milk In French Regions.png"
 filename
 ggsave(filename, last_plot(), dpi = 300, width = 4, height = 7)
 
+
+# trying to add interactivity with the plot 
+
+interactive_map <- ggplotly(p)
+interactive_map
+
+# Will have to edit and improve this plotly but it works kind of... 
+# It does not have all the information listed as just the ggplot 
