@@ -38,7 +38,6 @@ rel_size = 2.5
 theme_update(
     plot.title.position   = "plot",
     plot.caption.position = "plot",
-    legend.position       = 'plot',
     plot.background       = element_rect(fill = "white", color = "white"),
     panel.background      = element_rect(fill = "white", color = "white"),
     plot.title            = element_text(margin = margin(10, 0, 0, 0), size = rel(rel_size), color = "black", family = "text", face = "bold", hjust = 0.5),
@@ -68,16 +67,15 @@ captiont  <- str_glue("<br> {about}
 ggplot(new_df, aes(x =  reorder(ParkName, -CommonNamesCount), y = CommonNamesCount, fill = CategoryName)) +
   geom_bar(stat = "identity", position = "dodge") +
   #facet_wrap(~Order) +
-  labs(title = about, x = "Park Names", 
-  caption = captiont,
-   subtitle = "Counts of Common Names by Park and Category") +
+  labs(title = about, x = "Park Names", caption = captiont,
+   subtitle = "Counts of Common Names by Park and Category", fill = "Category Names") +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
     axis.text.y = element_text(size = 10),
     plot.caption = ggtext::element_textbox(  size = rel(1.2),
   margin = margin(t = 5, r = 5, b = 5, l = 5),
   padding = margin(t = 2, r = 2, b = 2, l = 2))
-  )
+  ) + guides(fill = guide_legend(override.aes = list(alpha = 1))) 
 
 
 ggsave("2024/2024-10-08/nationalparks.png", last_plot(),dpi = 300, width = 4, height = 6)
